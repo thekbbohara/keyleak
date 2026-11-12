@@ -122,17 +122,17 @@ Each finding prints its own fix. In general:
 Linux x86_64, from the release:
 
 ```sh
-curl -LO https://github.com/thekbbohara/keyleak/releases/download/v0.1.0/keyleak-v0.1.0-x86_64-linux.tar.gz
-curl -LO https://github.com/thekbbohara/keyleak/releases/download/v0.1.0/SHA256SUMS
+curl -LO https://github.com/thekbbohara/keyleak/releases/download/v0.1.1/keyleak-v0.1.1-x86_64-linux.tar.gz
+curl -LO https://github.com/thekbbohara/keyleak/releases/download/v0.1.1/SHA256SUMS
 sha256sum -c SHA256SUMS
-tar xzf keyleak-v0.1.0-x86_64-linux.tar.gz
-install -m 755 keyleak-v0.1.0-x86_64-linux/keyleak ~/.local/bin/
+tar xzf keyleak-v0.1.1-x86_64-linux.tar.gz
+install -m 755 keyleak-v0.1.1-x86_64-linux/keyleak ~/.local/bin/
 ```
 
 Anywhere with Rust 1.80+:
 
 ```sh
-cargo install --git https://github.com/thekbbohara/keyleak --tag v0.1.0
+cargo install --git https://github.com/thekbbohara/keyleak --tag v0.1.1
 ```
 
 ## What do the exit codes mean?

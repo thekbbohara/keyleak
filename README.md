@@ -18,17 +18,17 @@ Questions (false positives, fixing a key, exit codes, gitleaks vs trufflehog): s
 Linux x86_64, one static binary with no dependencies:
 
 ```sh
-curl -LO https://github.com/thekbbohara/keyleak/releases/download/v0.1.0/keyleak-v0.1.0-x86_64-linux.tar.gz
-curl -LO https://github.com/thekbbohara/keyleak/releases/download/v0.1.0/SHA256SUMS
+curl -LO https://github.com/thekbbohara/keyleak/releases/download/v0.1.1/keyleak-v0.1.1-x86_64-linux.tar.gz
+curl -LO https://github.com/thekbbohara/keyleak/releases/download/v0.1.1/SHA256SUMS
 sha256sum -c SHA256SUMS
-tar xzf keyleak-v0.1.0-x86_64-linux.tar.gz
-install -m 755 keyleak-v0.1.0-x86_64-linux/keyleak ~/.local/bin/
+tar xzf keyleak-v0.1.1-x86_64-linux.tar.gz
+install -m 755 keyleak-v0.1.1-x86_64-linux/keyleak ~/.local/bin/
 ```
 
 macOS or anything else with Rust 1.80+:
 
 ```sh
-cargo install --git https://github.com/thekbbohara/keyleak --tag v0.1.0
+cargo install --git https://github.com/thekbbohara/keyleak --tag v0.1.1
 ```
 
 ## Run it
@@ -61,8 +61,8 @@ Exit code: `0` no keys, `1` keys found, `2` error.
 OpenAI, Anthropic, Google / Gemini, AWS (key ID and secret), GitHub (classic
 and fine-grained), GitLab, Slack (tokens, app tokens, webhooks), Stripe (live,
 test, webhook), Telegram bots, Hugging Face, Deepgram, OpenRouter, Groq, xAI,
-Replicate, npm, PyPI, SendGrid, private keys, passwords in URLs and `.netrc`,
-bearer tokens, and generic `SOMETHING_API_KEY=` / `TOKEN=` / `SECRET=`
+Replicate, npm, PyPI, SendGrid, JSON Web Tokens (JWTs), private keys,
+passwords in URLs and `.netrc`, bearer tokens, and generic `SOMETHING_API_KEY=` / `TOKEN=` / `SECRET=`
 assignments with random-looking values.
 
 Placeholders (`your_api_key_here`, `sk-xxxx`, `<paste>`), `$VARIABLES`, paths,

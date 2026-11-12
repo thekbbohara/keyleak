@@ -206,6 +206,16 @@ pub static DETECTORS: &[Detector] = &[
         )
     },
     Detector {
+        show_prefix: Some(3),
+        ..d(
+            "jwt",
+            "JSON Web Token",
+            "Other",
+            r"\beyJ[A-Za-z0-9_-]{8,}\.eyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{16,}",
+            "Revoke the session or token on the service that issued it",
+        )
+    },
+    Detector {
         show_prefix: Some(11),
         ..d(
             "private-key",
@@ -576,6 +586,31 @@ mod tests {
         assert!(ids(&format!("{line}  # keyleak:allow")).is_empty());
         // An empty value never borrows the next line.
         assert!(ids("API_TOKEN=\nZq8vR2kLm9Tx4Bn7Wc1Y\n").is_empty());
+    }
+
+    #[test]
+    fn jwts_are_found_and_masked() {
+        let jwt = format!("{}.{}.{}", fake("eyJ", 30, 50), fake("eyJ", 60, 51), fake("", 43, 52));
+        let text = format!("curl 'https://api.example.dev/v1/file?token={jwt}'");
+        assert_eq!(ids(&text), vec!["jwt"]);
+        let det = DETECTORS.iter().find(|d| d.id == "jwt").unwrap();
+        let m = mask(det, &jwt);
+        assert!(m.starts_with("eyJ…") && m.ends_with(&jwt[jwt.len() - 4..]), "{m}");
+        assert_eq!(m.chars().count(), "eyJ…".chars().count() + 4);
+    }
+
+    #[test]
+    fn non_jwt_dotted_tokens_are_not_jwts() {
+        for text in [
+            "junk.token.here",
+            "session=abcdefghijkl.mnopqrstuvwx.yzABCDEFGHIJKLMNOP",
+            // Header without a JSON payload segment.
+            &format!("{}.{}.{}", fake("eyJ", 30, 53), fake("", 60, 54), fake("", 43, 55)),
+            // Too short to be a signed token.
+            "eyJhbGci.eyJzdWIi.c2ln",
+        ] {
+            assert!(!ids(text).contains(&"jwt"), "{text}");
+        }
     }
 
     #[test]

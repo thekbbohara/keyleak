@@ -1,6 +1,6 @@
 [package]
 name = "keyleak"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 rust-version = "1.80"
 description = "Find API keys leaked in your shell history, .env files, dotfiles and AI agent logs. Offline, read-only, always masked."
